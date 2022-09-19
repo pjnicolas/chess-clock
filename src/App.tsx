@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import TimeSelector from './TimeSelector'
+import Clock from './Clock'
 import './App.css';
 
-function App() {
+
+const App: React.FC = () => {
+  const [time, setTime] = useState(5)
+  const [increment, setIncrement] = useState(3)
+  const [playing, setPlaying] = useState(false)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {
+        !playing ? <TimeSelector onStart={(t, i) => {
+          // setTime(t * 60 * 1000)
+          setTime(6 * 1000)
+          setIncrement(i * 1000)
+          setPlaying(true)
+        }} /> : <Clock time={time} increment={increment} onRestart={() => {
+          setPlaying(false)
+        }} />
+      }
     </div>
   );
 }
