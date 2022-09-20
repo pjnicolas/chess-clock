@@ -6,14 +6,34 @@ export const AudioBeep = new Audio(SoundBeep)
 export const AudioBeep2 = new Audio(SoundBeep2)
 export const AudioClank = new Audio(SoundClank)
 
+// AudioBeep.loop = true
+// AudioBeep.volume = 5
+
 export const playBeep = () => {
   AudioBeep.pause()
   AudioBeep.currentTime = 0
   AudioBeep.play()
 }
 
+
+AudioClank.loop = true
+AudioClank.volume = 0
+AudioClank.play()
+
+let clankTimeout: null | NodeJS.Timeout = null
+
 export const playClank = () => {
-  AudioClank.pause()
+  if (clankTimeout) {
+    clearTimeout(clankTimeout)
+  }
+
   AudioClank.currentTime = 0
-  AudioClank.play()
+  AudioClank.volume = 1
+  AudioClank.loop = false
+
+  clankTimeout = setTimeout(() => {
+    AudioClank.volume = 0
+    AudioClank.loop = true
+    AudioClank.play()
+  }, 500)
 }
