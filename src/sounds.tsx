@@ -4,7 +4,6 @@ export const SoundClank = 'data:audio/wav;base64,UklGRnyaAABXQVZFZm10IBAAAAABAAE
 
 export const AudioBeep = new Audio(SoundBeep)
 export const AudioBeep2 = new Audio(SoundBeep2)
-export const AudioClank = new Audio(SoundClank)
 
 // AudioBeep.loop = true
 // AudioBeep.volume = 5
@@ -15,25 +14,35 @@ export const playBeep = () => {
   AudioBeep.play()
 }
 
+export const AudioClank = new Audio(SoundClank)
 
-AudioClank.loop = true
-AudioClank.volume = 0
-AudioClank.play()
+setTimeout(() => {
+  const AudioContextClank = new AudioContext();
+  const TrackClank = new MediaElementAudioSourceNode(AudioContextClank, { mediaElement: AudioClank });
+  TrackClank.connect(AudioContextClank.destination);
+}, 2000)
 
-let clankTimeout: null | NodeJS.Timeout = null
+// AudioClank.loop = true
+// AudioClank.volume = 0
+// AudioClank.play()
+
+// let clankTimeout: null | NodeJS.Timeout = null
 
 export const playClank = () => {
-  if (clankTimeout) {
-    clearTimeout(clankTimeout)
-  }
-
   AudioClank.currentTime = 0
-  AudioClank.volume = 1
-  AudioClank.loop = false
+  AudioClank.play()
+  // AudioBeep.play()
+  // if (clankTimeout) {
+  //   clearTimeout(clankTimeout)
+  // }
 
-  clankTimeout = setTimeout(() => {
-    AudioClank.volume = 0
-    AudioClank.loop = true
-    AudioClank.play()
-  }, 500)
+  // AudioClank.currentTime = 0
+  // AudioClank.volume = 1
+  // AudioClank.loop = false
+
+  // clankTimeout = setTimeout(() => {
+  //   AudioClank.volume = 0
+  //   AudioClank.loop = true
+  //   AudioClank.play()
+  // }, 500)
 }
