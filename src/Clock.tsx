@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { SoundBeep, SoundClank } from './sounds';
+import { playBeep, playClank } from './sounds';
 
 enum ETurn {
   BEGIN = 0,
@@ -17,20 +17,10 @@ const timeToString = (millis: number) => {
   return `${makeItDoubleDigits(m)}:${makeItDoubleDigits(s)}`
 }
 
-const clank = () => {
-  const sndClank = new Audio(SoundClank)
-  sndClank.play()
-}
-
-const beep = () => {
-  const snd = new Audio(SoundBeep)
-  snd.play()
-}
-
 const multipleBeep = () => {
   for (let i = 0; i < 20; i += 1) {
     setTimeout(() => {
-      beep()
+      playBeep()
     }, i * 50)
   }
 }
@@ -63,10 +53,10 @@ const Clock: React.FC<IClockProps> = ({ time, increment, onRestart }) => {
           const oldSeconds = Math.floor(oldTimeLeftTop / 1000)
           const newSeconds = Math.floor(newTimeLeftTop / 1000)
           if (oldSeconds !== newSeconds && newSeconds < 6) {
-            beep()
+            playBeep()
           }
           if (oldTimeLeftTop > DANGER_THRESHOLD && newTimeLeftTop < DANGER_THRESHOLD) {
-            beep()
+            playBeep()
           }
           if (newTimeLeftTop < 0) {
             multipleBeep()
@@ -82,10 +72,10 @@ const Clock: React.FC<IClockProps> = ({ time, increment, onRestart }) => {
           const oldSeconds = Math.floor(oldTimeLeftBottom / 1000)
           const newSeconds = Math.floor(newTimeLeftBottom / 1000)
           if (oldSeconds !== newSeconds && newSeconds < 6) {
-            beep()
+            playBeep()
           }
           if (oldTimeLeftBottom > DANGER_THRESHOLD && newTimeLeftBottom < DANGER_THRESHOLD) {
-            beep()
+            playBeep()
           }
           if (newTimeLeftBottom < 0) {
             multipleBeep()
@@ -119,7 +109,7 @@ const Clock: React.FC<IClockProps> = ({ time, increment, onRestart }) => {
         }}
         onTouchStart={() => {
           if (turn !== ETurn.BOTTOM && turn !== ETurn.END && !isPaused) {
-            clank()
+            playClank()
             if (turn !== ETurn.BEGIN && increment && timeLeftTop > 0) {
               setTimeLeftTop((t) => t + increment)
             }
@@ -174,7 +164,7 @@ const Clock: React.FC<IClockProps> = ({ time, increment, onRestart }) => {
         }}
         onTouchStart={() => {
           if (turn !== ETurn.TOP && turn !== ETurn.END && !isPaused) {
-            clank()
+            playClank()
             if (turn !== ETurn.BEGIN && increment && timeLeftBottom > 0) {
               setTimeLeftBottom((t) => t + increment)
             }
