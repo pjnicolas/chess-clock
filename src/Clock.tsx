@@ -35,7 +35,7 @@ const multipleBeep = () => {
   }
 }
 
-const UPDATE_FREQUENCY = 100
+const UPDATE_FREQUENCY = 200
 const DANGER_THRESHOLD = 30 * 1000
 
 interface IClockProps {
@@ -119,11 +119,11 @@ const Clock: React.FC<IClockProps> = ({ time, increment, onRestart }) => {
         }}
         onTouchStart={() => {
           if (turn !== ETurn.BOTTOM && turn !== ETurn.END && !isPaused) {
+            clank()
             if (turn !== ETurn.BEGIN && increment && timeLeftTop > 0) {
               setTimeLeftTop((t) => t + increment)
             }
             setTurn(ETurn.BOTTOM)
-            clank()
           }
         }}
       >
@@ -174,11 +174,11 @@ const Clock: React.FC<IClockProps> = ({ time, increment, onRestart }) => {
         }}
         onTouchStart={() => {
           if (turn !== ETurn.TOP && turn !== ETurn.END && !isPaused) {
+            clank()
             if (turn !== ETurn.BEGIN && increment && timeLeftBottom > 0) {
               setTimeLeftBottom((t) => t + increment)
             }
             setTurn(ETurn.TOP)
-            clank()
           }
         }}
       >

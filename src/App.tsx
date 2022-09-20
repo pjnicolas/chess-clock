@@ -13,8 +13,7 @@ const App: React.FC = () => {
     <div>
       {
         !playing ? <TimeSelector onStart={(t, i) => {
-          // setTime(t * 60 * 1000)
-          setTime(6 * 1000)
+          setTime(t * 60 * 1000)
           setIncrement(i * 1000)
           setPlaying(true)
         }} /> : <Clock time={time} increment={increment} onRestart={() => {
