@@ -2,12 +2,23 @@ import React, { useState } from 'react';
 import TimeSelector from './TimeSelector'
 import Clock from './Clock'
 import './App.css';
+import TapToStart from './TapToStart';
+import { noop } from './sounds';
 
+
+noop()
 
 const App: React.FC = () => {
   const [time, setTime] = useState(5)
   const [increment, setIncrement] = useState(3)
   const [playing, setPlaying] = useState(false)
+  const [waitingFullscreen, setWaitingFullscreen] = useState(true)
+
+  if (waitingFullscreen) {
+    return (
+      <TapToStart onStart={() => setWaitingFullscreen(false)} />
+    )
+  }
 
   return (
     <div>
