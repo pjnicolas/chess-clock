@@ -35,7 +35,9 @@ export const playClank = () => {
 export const playBeep = () => {
   if (ContextBeep && OscillatorBeep && GainBeep) {
     GainBeep.gain.value = 1
-    GainBeep.gain.exponentialRampToValueAtTime(1e-10, ContextBeep.currentTime + 0.5)
+    setTimeout(() => {
+      GainBeep!.gain.value = 0
+    }, 100)
   }
 }
 
@@ -43,7 +45,7 @@ export const playLongBeep = () => {
   if (ContextBeep && OscillatorBeep && GainBeep) {
     GainBeep.gain.value = 1
     setTimeout(() => {
-      GainBeep!.gain.exponentialRampToValueAtTime(1e-10, ContextBeep!.currentTime + 0.5)
+      GainBeep!.gain.value = 0
     }, 1000)
   }
 }

@@ -37,7 +37,7 @@ const ClockPlayer: React.FC<IClockPlayer> = ({ isPaused, timeLeft, isTurn, onFin
         }
       }}
     >
-      <div className="inline-block rotate-90">
+      <div className="inline-block rotate-90 select-none">
         { timeToString(timeLeft) }
       </div>
     </div>

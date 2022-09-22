@@ -27,7 +27,7 @@ const TimeSelector: React.FC<ITimeSelectorProps> = ({ onStart }) => {
                 backgroundColor: time === t ? 'black' : 'white',
                 color: time === t ? 'white' : 'black',
               }}
-              onTouchStart={() => {
+              onClick={() => {
                 setTime(t)
               }}
             >
@@ -49,7 +49,7 @@ const TimeSelector: React.FC<ITimeSelectorProps> = ({ onStart }) => {
                 backgroundColor: increment === t ? 'black' : 'white',
                 color: increment === t ? 'white' : 'black',
               }}
-              onTouchStart={() => {
+              onClick={() => {
                 setIncrement(t)
               }}
             >
@@ -61,7 +61,7 @@ const TimeSelector: React.FC<ITimeSelectorProps> = ({ onStart }) => {
       <div
         className="border text-3xl font-bold p-5 text-center m-4 text-white"
         style={{ backgroundColor: '#aaa' }}
-        onTouchStart={() => {
+        onClick={() => {
           onStart(time, increment)
         }}
       >
