@@ -5,14 +5,24 @@ export const SoundClank = 'data:audio/wav;base64,UklGRnyaAABXQVZFZm10IBAAAAABAAE
 export const AudioBeep = new Audio(SoundBeep)
 export const AudioClank = new Audio(SoundClank)
 
+let ContextBeep: null | AudioContext = null
+let OscillatorBeep: null | OscillatorNode = null
+let GainBeep: null | GainNode = null
+
 setTimeout(() => {
   const AudioContextClank = new AudioContext();
   const TrackClank = new MediaElementAudioSourceNode(AudioContextClank, { mediaElement: AudioClank });
   TrackClank.connect(AudioContextClank.destination);
 
-  const AudioContextBeep = new AudioContext();
-  const TrackBeep = new MediaElementAudioSourceNode(AudioContextBeep, { mediaElement: AudioBeep });
-  TrackBeep.connect(AudioContextBeep.destination);
+  ContextBeep = new AudioContext();
+  // const TrackBeep = new MediaElementAudioSourceNode(ContextBeep, { mediaElement: AudioBeep });
+  // TrackBeep.connect(ContextBeep.destination);
+
+  OscillatorBeep = ContextBeep.createOscillator()
+  GainBeep = ContextBeep.createGain()
+  OscillatorBeep.connect(GainBeep)
+  GainBeep.connect(ContextBeep.destination)
+  OscillatorBeep.type = 'square'
 }, 2000)
 
 export const playClank = () => {
@@ -20,9 +30,32 @@ export const playClank = () => {
   AudioClank.play()
 }
 
+let playingBeep = false
+
 export const playBeep = () => {
-  AudioBeep.currentTime = 0
-  AudioBeep.play()
+  if (ContextBeep && OscillatorBeep && GainBeep) {
+    if (!playingBeep) {
+      OscillatorBeep.start(0)
+      playingBeep = true
+    } else {
+      GainBeep.gain.exponentialRampToValueAtTime(1, ContextBeep.currentTime)
+    }
+    GainBeep.gain.exponentialRampToValueAtTime(0.00001, ContextBeep.currentTime + 0.5)
+  }
+}
+
+export const playLongBeep = () => {
+  if (ContextBeep && OscillatorBeep && GainBeep) {
+    if (!playingBeep) {
+      OscillatorBeep.start(0)
+      playingBeep = true
+    } else {
+      GainBeep.gain.exponentialRampToValueAtTime(1, ContextBeep.currentTime)
+    }
+    setTimeout(() => {
+      GainBeep!.gain.exponentialRampToValueAtTime(0.00001, ContextBeep!.currentTime + 0.5)
+    }, 2000)
+  }
 }
 
 export const noop = () => {}
