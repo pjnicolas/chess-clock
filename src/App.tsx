@@ -3,10 +3,7 @@ import TimeSelector from './TimeSelector'
 import Clock from './Clock'
 import './App.css';
 import TapToStart from './TapToStart';
-import { noop } from './sounds';
-
-
-noop()
+import { loadAudio } from './sounds';
 
 const App: React.FC = () => {
   const [time, setTime] = useState(5)
@@ -24,6 +21,7 @@ const App: React.FC = () => {
     <div>
       {
         !playing ? <TimeSelector onStart={(t, i) => {
+          loadAudio()
           setTime(t * 60 * 1000)
           setIncrement(i * 1000)
           setPlaying(true)
